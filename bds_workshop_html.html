@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Data Services · Chủ đầu tư BĐS</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f7f8fa;--bg2:#fff;--bg3:#f0f2f6;
+  --border:#e4e7ef;--border2:#c8cedf;
+  --text:#1a1d2e;--text2:#5a6180;--text3:#9aa0b8;
+  --blue:#1a6bff;--blue-l:#e8f0ff;--blue-m:#b8d0ff;
+  --teal:#00c896;--teal-l:#e0faf3;--teal-m:#7fe8cc;
+  --purple:#7c5cfc;--purple-l:#f0ecff;--purple-m:#c4b4fc;
+  --amber:#f59e0b;--amber-l:#fffbeb;--amber-m:#fcd34d;
+  --red:#ef4444;--red-l:#fef2f2;
+  --r:8px;--rl:12px;
+}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text)}
+@media print{.nav-bar{display:none!important}.slide{page-break-after:always;display:block!important}}
+.nav-bar{position:sticky;top:0;z-index:100;background:#fff;border-bottom:1px solid var(--border);padding:0 20px;display:flex;align-items:center;gap:10px;height:50px}
+.nav-logo{display:flex;align-items:center;gap:8px;margin-right:10px}
+.nav-logo img{height:20px}
+.nav-div{width:1px;height:16px;background:var(--border)}
+.nav-title{font-size:11px;color:var(--text3);font-weight:500;max-width:280px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nav-dots{display:flex;gap:3px;flex:1}
+.ndot{height:3px;border-radius:2px;border:none;cursor:pointer;background:var(--border2);flex:1;transition:background .2s}
+.ndot.active{background:var(--blue)}
+.ndot.done{background:var(--teal)}
+.nav-r{display:flex;gap:6px;align-items:center}
+.nav-r span{font-size:11px;color:var(--text3);min-width:36px;text-align:center}
+.nbtn{padding:4px 11px;font-size:12px;border-radius:var(--r);cursor:pointer;background:#fff;border:1px solid var(--border);color:var(--text2);font-weight:500}
+.nbtn:hover{border-color:var(--blue);color:var(--blue);background:var(--blue-l)}
+.pbtn{padding:4px 12px;font-size:12px;border-radius:var(--r);cursor:pointer;background:var(--blue);border:1px solid var(--blue);color:#fff;font-weight:500}
+.wrap{max-width:900px;margin:0 auto;padding:24px 20px 48px}
+.slide{display:none}.slide.active{display:block}
+.slbl{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:700;letter-spacing:.08em;padding:2px 10px;border-radius:20px;margin-bottom:12px}
+.sdot{width:5px;height:5px;border-radius:50%}
+h1{font-size:23px;font-weight:700;margin-bottom:4px;letter-spacing:-.02em;line-height:1.25}
+.sub{font-size:13px;color:var(--text3);margin-bottom:20px}
+
+/* Cover */
+.cv-wrap{min-height:80vh;display:flex;flex-direction:column;justify-content:center;padding:48px 0 32px}
+.cv-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:.1em;color:var(--blue);padding:4px 14px;background:var(--blue-l);border-radius:20px;border:1px solid var(--blue-m);margin-bottom:20px}
+.cv-title{font-size:36px;font-weight:800;letter-spacing:-.04em;line-height:1.15;margin-bottom:10px}
+.cv-title .hl{color:var(--blue)}.cv-title .hl2{color:var(--teal)}
+.cv-div{width:48px;height:3px;background:var(--blue);border-radius:2px;margin-bottom:14px}
+.cv-sub{font-size:14px;color:var(--text3);margin-bottom:36px;font-weight:500}
+.cv-parts{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:680px}
+.cv-part{padding:16px 18px;border-radius:var(--rl);border:1px solid var(--border);background:#fff;position:relative;overflow:hidden}
+.cv-part::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.cv-part.p1::before{background:var(--blue)}
+.cv-part.p2::before{background:#ffc107}
+.cv-part.p3::before{background:#22c55e}
+.cv-pnum{font-size:11px;font-weight:700;letter-spacing:.07em;margin-bottom:6px}
+.cv-part.p1 .cv-pnum{color:var(--blue)}
+.cv-part.p2 .cv-pnum{color:#856404}
+.cv-part.p3 .cv-pnum{color:#16a34a}
+.cv-ptitle{font-size:13px;font-weight:700;color:var(--text);margin-bottom:3px;line-height:1.3}
+.cv-pdesc{font-size:11px;color:var(--text3);line-height:1.45}
+
+/* Data Services */
+.ds-hero{background:var(--blue-l);border:1px solid var(--blue-m);border-radius:var(--rl);padding:18px 20px;margin-bottom:16px}
+.ds-hero-lbl{font-size:11px;font-weight:700;letter-spacing:.06em;color:var(--blue);margin-bottom:6px}
+.ds-hero-t{font-size:18px;font-weight:700;color:var(--text);margin-bottom:6px}
+.ds-hero-d{font-size:13px;color:var(--text2);line-height:1.6}
+
+/* Pain */
+.pain-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.pc{padding:12px 14px;background:#fff;border:1px solid var(--border);border-radius:var(--rl);border-top:3px solid transparent}
+.pc.hi{border-top-color:var(--red)}.pc.md{border-top-color:var(--amber)}
+.psev{font-size:9px;font-weight:700;letter-spacing:.06em;padding:1px 6px;border-radius:10px;display:inline-block;margin-bottom:5px}
+.pc.hi .psev{background:var(--red-l);color:var(--red)}.pc.md .psev{background:var(--amber-l);color:var(--amber)}
+.pt{font-size:12px;font-weight:600;margin-bottom:3px}
+.pd{font-size:11px;color:var(--text2);line-height:1.5}
+
+/* CV 7 bước */
+.cvg{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;margin-bottom:10px}
+.cvn{background:var(--bg3);border:1px solid var(--border);border-radius:7px;padding:8px 3px;text-align:center;cursor:pointer;transition:all .15s}
+.cvn:hover{border-color:var(--blue)}
+.cvnum{font-size:14px;font-weight:700;color:var(--blue);margin-bottom:2px}
+.cvlbl{font-size:9px;font-weight:600;color:var(--text);line-height:1.3}
+.cvdet{background:#fff;border:1.5px solid var(--blue-m);border-radius:var(--rl);padding:12px 14px;min-height:64px}
+
+/* Timeline L1–L4 */
+.tl-out{display:flex;gap:0}
+.tl-sp{display:flex;flex-direction:column;align-items:center;padding-top:16px;width:44px;flex-shrink:0}
+.tl-nd{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;border:2px solid;flex-shrink:0;cursor:pointer;background:#fff}
+.tl-vl{width:2px;flex:1;min-height:14px;background:var(--border)}
+.tl-rows{flex:1;display:flex;flex-direction:column;gap:5px}
+.tl-row{padding:10px 12px;border:1.5px solid var(--border);border-radius:var(--rl);cursor:pointer;background:#fff}
+.tl-row:hover{border-color:var(--blue)}
+.tl-badge{font-size:9px;font-weight:700;letter-spacing:.06em;padding:2px 7px;border-radius:20px;display:inline-block;margin-bottom:4px}
+.tl-t{font-size:13px;font-weight:600;color:var(--text);margin-bottom:2px}
+.tl-d{font-size:11px;color:var(--text3);margin-bottom:5px}
+.tl-sym{font-size:10px;font-style:italic;color:var(--text3);margin-bottom:5px}
+.tl-pills{display:flex;flex-wrap:wrap;gap:4px}
+.tl-pill{font-size:10px;padding:2px 7px;border-radius:20px;border:1px solid}
+.tl-det{border:1.5px solid var(--border);border-radius:var(--rl);overflow:hidden;margin-top:8px}
+.tl-dh{padding:10px 14px;border-bottom:1px solid var(--border)}
+.tl-dtabs{display:flex;background:var(--bg);border-bottom:1px solid var(--border)}
+.tl-dtab{flex:1;padding:7px 4px;font-size:11px;font-weight:500;background:transparent;border:none;border-bottom:2px solid transparent;cursor:pointer;color:var(--text3)}
+.tl-dtab.on{color:var(--text);border-bottom-color:var(--blue)}
+.tl-db{padding:12px 14px;background:#fff;min-height:100px}
+
+/* Reports */
+.rpt-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.rpt-card{background:#fff;border:1px solid var(--border);border-radius:var(--rl);overflow:hidden}
+.rpt-head{padding:10px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+.rpt-dot{width:8px;height:8px;border-radius:50%}
+.rpt-ht{font-size:13px;font-weight:600}
+.rpt-row{display:flex;align-items:center;justify-content:space-between;padding:9px 14px;border-bottom:1px solid var(--bg3)}
+.rpt-row:last-child{border-bottom:none}
+.rpt-nm{font-size:12px;color:var(--text)}
+.rpt-meta{display:flex;gap:8px;align-items:center;flex-shrink:0}
+.rpt-freq{font-size:10px;font-weight:600;padding:2px 7px;border-radius:20px;border:1px solid}
+.rpt-ow{font-size:11px;color:var(--text3)}
+
+/* Before After */
+.ba-cols{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.ba-col{border-radius:var(--rl);overflow:hidden;border:1px solid}
+.ba-head{padding:8px 14px;font-size:11px;font-weight:700;letter-spacing:.05em;border-bottom:1px solid}
+.ba-col ul{list-style:none;padding:10px 14px}
+.ba-col li{font-size:11px;color:var(--text2);margin-bottom:6px;padding-left:14px;position:relative;line-height:1.5}
+.ba-col li::before{content:'›';position:absolute;left:0;color:var(--text3)}
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.metric{background:#fff;border:1px solid var(--border);border-radius:var(--rl);padding:14px;text-align:center;border-top:3px solid var(--blue)}
+.mv{font-size:28px;font-weight:800;color:var(--blue);letter-spacing:-.02em}
+.ml{font-size:11px;font-weight:600;color:var(--text);margin:3px 0 2px}
+.ms{font-size:10px;color:var(--text3)}
+
+/* Sol grid */
+.sol-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.sol-card{background:#fff;border:1px solid var(--border);border-radius:var(--rl);overflow:hidden}
+.sol-head{padding:8px 12px;border-bottom:1px solid var(--border)}
+.sol-head-t{font-size:12px;font-weight:700}
+.sol-body{padding:10px 12px}
+.sol-item{display:flex;gap:8px;align-items:flex-start;margin-bottom:7px;font-size:12px;color:var(--text2);line-height:1.5}
+.sol-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;margin-top:5px}
+
+/* Toolkit */
+.tk-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tk-lbl{font-size:10px;font-weight:700;letter-spacing:.07em;color:var(--text3);margin-bottom:7px}
+.sig-gt{font-size:12px;font-weight:600;color:var(--text);margin-bottom:5px;display:flex;align-items:center;gap:6px}
+.sdot2{width:7px;height:7px;border-radius:50%}
+.sig-item{font-size:11px;color:var(--text2);padding:5px 9px;background:#fff;border:1px solid var(--border);border-radius:var(--r);margin-bottom:4px;border-left:3px solid}
+.disc-item{margin-bottom:5px;padding:8px 10px;background:#fff;border:1px solid var(--border);border-radius:var(--rl)}
+.disc-cat{font-size:9px;font-weight:700;letter-spacing:.07em;margin-bottom:2px;color:var(--purple)}
+.disc-q{font-size:11px;color:var(--text2);line-height:1.5}
+
+/* Takeaway */
+.tw-item{display:flex;gap:14px;padding:14px 16px;background:#fff;border:1px solid var(--border);border-radius:var(--rl);margin-bottom:8px;position:relative;overflow:hidden}
+.tw-item::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px}
+.tw-num{font-size:22px;font-weight:800;min-width:36px;line-height:1.1}
+.tw-t{font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px}
+.tw-d{font-size:12px;color:var(--text2);line-height:1.6}
+</style>
+</head>
+<body>
+
+<div class="nav-bar">
+  <div class="nav-logo">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAACWCAMAAAAL34HQAAAA4VBMVEUxgO3///8vge0tfu0sfOwqe+wne+smeusmeuokeekieekgeOgfeOaceacb+KZbeCXa9+Uad6SZ92QZtyOZNuMYtqKYNqIX9mGXdiFXNeDWtaBWdV/V9R9VdN7U9J5UtF3UNB1T892Ts5zTM5xS81vSsxtSMxrR8tpRsppRclnRMhlQ8djQsZhQMVgP8ReP8ReQMRbPcJaO8FYOsBXOb9VN75UN71SNrxQNLtPM7pNMrlMLLhLK7dIKbZHKLVEJbRDJLNBI7I/IbE9ILA8ILA6H685Hq44Ha03HKwpfOze9fjAAAAA7UlEQVR4nO3XSU7DMBRA0JqZhAwEIoGEgIQSWjrP+9/RAoqiVlaKk9hS3jkb+OUFC0mSJEmSJEmSJEmSJEnS/rT3w9uN62N+UJE9LmT1trCW3RzWkFO3hjXkVJuhFuQYCwvJXXgX5lB0IZDdRHahCw5u3e7mLJDdRHahCw5u3e7mLJDdRHahCw5u3e7mLJDdRHahCw5u3e7mLJDdRHahCw5u3e7mLJDdRHahCw5u3e7mLJDdRHahCw5u3e7mLJDdRHahCw5u3e7mLJDdRHahCw5u3e7mLJAkSZIkSZIkSZIkSZL2oQ9IriPXbOJgIAAAAABJRU5ErkJggg==" alt="Base.vn">
+    <div class="nav-div"></div>
+    <span class="nav-title">Một vài thứ hay ho về Data Services · Chủ đầu tư BĐS</span>
+  </div>
+  <div class="nav-dots" id="dots"></div>
+  <div class="nav-r">
+    <span id="counter">1/9</span>
+    <button class="nbtn" id="btn-prev">← Trước</button>
+    <button class="nbtn" id="btn-next">Tiếp →</button>
+    <button class="pbtn" id="btn-print">Xuất PDF</button>
+  </div>
+</div>
+
+<div class="wrap">
+
+<!-- S0 COVER -->
+<div class="slide active" id="s0">
+  <div class="cv-wrap">
+    <div class="cv-eyebrow">Base.vn · Data Services</div>
+    <h1 class="cv-title">Một vài thứ <span class="hl">hay ho</span> về<br>Data Services<br>- <span class="hl2">Chủ đầu tư BĐS</span></h1>
+    <div class="cv-div"></div>
+    <p class="cv-sub">Internal sharing · Team Sales</p>
+    <div class="cv-parts">
+      <div class="cv-part p1"><div class="cv-pnum">PHẦN 01</div><div class="cv-ptitle">Giải pháp công nghệ Data Services</div><div class="cv-pdesc">Portfolio sản phẩm, tech stack & value proposition</div></div>
+      <div class="cv-part p2"><div class="cv-pnum">PHẦN 02</div><div class="cv-ptitle">Case study: Hudland</div><div class="cv-pdesc">Mô hình vận hành, pain points, before → after & cách tiếp cận</div></div>
+      <div class="cv-part p3"><div class="cv-pnum">PHẦN 03</div><div class="cv-ptitle">Kết luận & Sales toolkit</div><div class="cv-pdesc">Tín hiệu nhận biết, discovery questions & takeaways</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- S1 DATA SERVICES -->
+<div class="slide" id="s1">
+  <div class="slbl" style="background:var(--blue-l);color:var(--blue)"><span class="sdot" style="background:var(--blue)"></span>PHẦN 1 · GIẢI PHÁP CÔNG NGHỆ</div>
+  <h1>Data Services là gì?</h1>
+  <p class="sub">Value proposition · Portfolio sản phẩm · Tech stack</p>
+  <div class="ds-hero">
+    <div class="ds-hero-lbl">ONE-LINER</div>
+    <div class="ds-hero-t">Biến dữ liệu rời rạc thành quyết định kinh doanh</div>
+    <div class="ds-hero-d">Data Services giúp doanh nghiệp BĐS đi từ Excel phân tán → dashboard real-time → ra quyết định bằng data, không bằng cảm tính.</div>
+  </div>
+</div>
+
+<!-- S2 HUDLAND MÔ HÌNH -->
+<div class="slide" id="s2">
+  <div class="slbl" style="background:#fff3cd;color:#856404"><span class="sdot" style="background:#ffc107"></span>PHẦN 2 · CASE STUDY: HUDLAND</div>
+  <h1>2.1 Mô hình vận hành & chuỗi giá trị</h1>
+  <p class="sub">Hiểu bức tranh tổng thể trước khi nói data</p>
+
+  <!-- 3 giai đoạn -->
+  <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+    <div style="flex:1"><div style="font-size:11px;font-weight:600;color:var(--text)">GĐ. 01. Chuẩn bị đầu tư</div><div style="font-size:10px;color:var(--text3);margin-top:2px">Xin phép, thiết kế, huy động vốn.</div></div>
+    <div style="flex:1;text-align:center"><div style="font-size:11px;font-weight:600;color:var(--text)">GĐ. 02. Thi công xây dựng</div><div style="font-size:10px;color:var(--text3);margin-top:2px">Xây dựng, hoàn thiện, nghiệm thu.</div></div>
+    <div style="flex:1;text-align:right"><div style="font-size:11px;font-weight:600;color:var(--text)">GĐ. 03. Khai thác</div><div style="font-size:10px;color:var(--text3);margin-top:2px">Bán hàng, vận hành, quản lý tài sản.</div></div>
+  </div>
+  <div style="display:flex;align-items:center;margin-bottom:10px">
+    <div style="flex:1;height:2px;background:var(--blue-m)"></div>
+    <div style="width:12px;height:12px;border:2px solid var(--blue);border-radius:50%;background:#fff;flex-shrink:0"></div>
+    <div style="flex:1;height:2px;background:var(--blue-m)"></div>
+    <div style="width:12px;height:12px;border:2px solid var(--blue);border-radius:50%;background:#fff;flex-shrink:0"></div>
+    <div style="flex:1;height:2px;background:var(--blue-m)"></div>
+    <div style="width:12px;height:12px;border:2px solid var(--blue);border-radius:50%;background:#fff;flex-shrink:0"></div>
+    <div style="flex:1;height:2px;background:var(--blue-m)"></div>
+  </div>
+
+  <!-- Holdings -->
+  <div style="background:#1a3060;color:#fff;text-align:center;padding:7px;border-radius:6px;font-size:12px;font-weight:600;margin-bottom:7px">Mô hình Holdings điển hình ở Việt Nam ngành BĐS</div>
+  <div style="display:grid;grid-template-columns:1fr 2fr 1fr;gap:5px;margin-bottom:5px">
+    <div style="background:#f5b8b8;border-radius:7px;padding:7px 10px;text-align:center"><div style="font-size:11px;font-weight:600;color:#7a1a1a">Chủ đầu tư</div><div style="font-size:10px;color:#9a3a3a">(Real Estate Developer)</div></div>
+    <div style="background:#f5b8b8;border-radius:7px;padding:7px 10px;text-align:center"><div style="font-size:11px;font-weight:600;color:#7a1a1a">Chủ đầu tư</div><div style="font-size:10px;color:#9a3a3a">(Real Estate Developer)</div></div>
+    <div style="background:#f5b8b8;border-radius:7px;padding:7px 10px;text-align:center"><div style="font-size:11px;font-weight:600;color:#7a1a1a">Chủ đầu tư</div><div style="font-size:10px;color:#9a3a3a">(Real Estate Developer)</div></div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 2fr 1fr;gap:5px;margin-bottom:5px">
+    <div></div>
+    <div style="background:#f5e4a0;border-radius:7px;padding:7px 10px;text-align:center"><div style="font-size:11px;font-weight:600;color:#7a5a00">Tổng thầu</div><div style="font-size:10px;color:#9a7a20">(General Contractor - GC)</div></div>
+    <div></div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 2fr 1fr;gap:5px;margin-bottom:5px">
+    <div></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px">
+      <div style="background:#f5e4a0;border-radius:7px;padding:6px 8px;text-align:center"><div style="font-size:10px;font-weight:600;color:#7a5a00">Nhà thầu phụ</div><div style="font-size:9px;color:#9a7a20">(Subcontractor)</div></div>
+      <div style="background:#f5e4a0;border-radius:7px;padding:6px 8px;text-align:center"><div style="font-size:10px;font-weight:600;color:#7a5a00">Tư vấn thiết kế</div><div style="font-size:9px;color:#9a7a20">(Design Consultant)</div></div>
+      <div style="background:#f5e4a0;border-radius:7px;padding:6px 8px;text-align:center"><div style="font-size:10px;font-weight:600;color:#7a5a00">Nhà cung cấp vật tư</div><div style="font-size:9px;color:#9a7a20">(Supplier/Vendor)</div></div>
+    </div>
+    <div></div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;margin-bottom:16px">
+    <div></div>
+    <div style="background:#1d7a5f;border-radius:7px;padding:7px 10px;text-align:center"><div style="font-size:10px;font-weight:600;color:#e0f5ee">Sàn bất động sản</div><div style="font-size:9px;color:#a0e5cc">(Real Estate Brokerage &amp; Trading Floor)</div></div>
+    <div style="background:#1d7a5f;border-radius:7px;padding:7px 10px;text-align:center"><div style="font-size:10px;font-weight:600;color:#e0f5ee">Đơn vị vận hành tòa nhà &amp; khu công nghiệp</div></div>
+  </div>
+
+  <!-- 7 bước -->
+  <div style="font-size:11px;font-weight:700;color:var(--text3);letter-spacing:.07em;margin-bottom:7px">CHUỖI GIÁ TRỊ 7 BƯỚC — click để xem bài toán data</div>
+  <div class="cvg" id="cv-nodes">
+    <div class="cvn" data-cv="1"><div class="cvnum">1</div><div class="cvlbl">Tìm kiếm cơ hội</div></div>
+    <div class="cvn" data-cv="2"><div class="cvnum">2</div><div class="cvlbl">Đầu tư dự án</div></div>
+    <div class="cvn" data-cv="3"><div class="cvnum">3</div><div class="cvlbl">Mở thầu &amp; ký HĐ</div></div>
+    <div class="cvn" data-cv="4"><div class="cvnum">4</div><div class="cvlbl">Quản lý dự án</div></div>
+    <div class="cvn" data-cv="5"><div class="cvnum">5</div><div class="cvlbl">Nghiệm thu hoàn thiện</div></div>
+    <div class="cvn" data-cv="6"><div class="cvnum">6</div><div class="cvlbl">Quản lý bán hàng</div></div>
+    <div class="cvn" data-cv="7"><div class="cvnum">7</div><div class="cvlbl">CSKH</div></div>
+  </div>
+  <div class="cvdet" id="cv-detail"><div style="font-size:11px;color:var(--text3);text-align:center;padding:6px 0">Click vào từng bước để xem bài toán data</div></div>
+</div>
+
+<!-- S3 BỨC TRANH THỰC TẾ -->
+<div class="slide" id="s3">
+  <div class="slbl" style="background:#fff3cd;color:#856404"><span class="sdot" style="background:#ffc107"></span>PHẦN 2 · CASE STUDY: HUDLAND</div>
+  <h1>2.2 Bức tranh thực tế tại Hudland</h1>
+  <p class="sub">Pain points trước khi triển khai giải pháp data</p>
+  <div style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:8px 12px;font-size:12px;color:var(--text2);margin-bottom:14px;font-weight:500">Hudland Group · Chủ đầu tư BĐS · 5+ dự án đang triển khai · ~300 căn/dự án · 80+ nhân viên kinh doanh</div>
+  <div class="pain-grid">
+    <div class="pc hi"><div class="psev">CRITICAL</div><div class="pt">Báo cáo mất 5–7 ngày/tháng</div><div class="pd">Kế toán + kinh doanh tổng hợp thủ công từ 8+ file Excel. Số liệu thường sai lệch 15–20%.</div></div>
+    <div class="pc hi"><div class="psev">CRITICAL</div><div class="pt">Cash flow dự báo sai</div><div class="pd">Chi phí phát sinh từ nhà thầu không ghi nhận real-time. Dự báo lệch thực tế tới 30%.</div></div>
+    <div class="pc hi"><div class="psev">CRITICAL</div><div class="pt">Tiến độ dự án mù mờ</div><div class="pd">BGĐ chỉ biết tiến độ thực tế khi họp tuần. Không có cảnh báo sớm khi chậm milestone.</div></div>
+    <div class="pc md"><div class="psev">HIGH</div><div class="pt">Giỏ hàng không real-time</div><div class="pd">5 dự án cùng mở bán — sales manager không biết tổng tồn kho và trạng thái giao dịch.</div></div>
+    <div class="pc md"><div class="psev">HIGH</div><div class="pt">KPI sales không đo được</div><div class="pd">Không có scorecard tự động. Manager không biết ai đang tốt, ai cần coaching ngay.</div></div>
+    <div class="pc md"><div class="psev">MEDIUM</div><div class="pt">Dữ liệu đa pháp nhân rời rạc</div><div class="pd">Mỗi công ty con dùng ERP/kế toán khác nhau. Không có cái nhìn tổng hợp toàn tập đoàn.</div></div>
+  </div>
+</div>
+
+<!-- S4 BEFORE AFTER -->
+<div class="slide" id="s4">
+  <div class="slbl" style="background:#fff3cd;color:#856404"><span class="sdot" style="background:#ffc107"></span>PHẦN 2 · CASE STUDY: HUDLAND</div>
+  <h1>2.3 Before → After</h1>
+  <p class="sub">Kết quả sau khi triển khai giải pháp Data Services</p>
+  <div class="ba-cols">
+    <div class="ba-col" style="border-color:#fca5a5">
+      <div class="ba-head" style="background:#fef2f2;color:var(--red);border-color:#fca5a5">TRƯỚC KHI CÓ GIẢI PHÁP</div>
+      <ul>
+        <li>Báo cáo tháng mất 5–7 ngày tổng hợp từ 8+ file Excel</li>
+        <li>BGĐ không biết giỏ hàng còn lại theo real-time</li>
+        <li>Cash flow dự báo sai 25–30% do thiếu dữ liệu phát sinh</li>
+        <li>KPI sales không rõ ràng, manager không biết ai cần coaching</li>
+        <li>Mỗi cuộc họp BGĐ mất 60–90 phút chỉ để đồng bộ số liệu</li>
+        <li>Không có báo cáo tổng hợp toàn tập đoàn đa pháp nhân</li>
+      </ul>
+    </div>
+    <div class="ba-col" style="border-color:var(--teal-m)">
+      <div class="ba-head" style="background:var(--teal-l);color:#00906b;border-color:var(--teal-m)">SAU KHI TRIỂN KHAI</div>
+      <ul>
+        <li>Dashboard tự cập nhật mỗi giờ — báo cáo tuần generate tự động</li>
+        <li>Giỏ hàng 5 dự án real-time, phân loại theo trạng thái giao dịch</li>
+        <li>Cash flow forecast sát thực tế trong biên độ &lt;10%</li>
+        <li>Sales scorecard tự động — manager có data coaching ngay</li>
+        <li>Họp BGĐ rút xuống 30 phút, tập trung vào quyết định</li>
+        <li>Báo cáo tổng hợp toàn tập đoàn, phân quyền theo pháp nhân</li>
+      </ul>
+    </div>
+  </div>
+  <div class="metrics">
+    <div class="metric"><div class="mv">85%</div><div class="ml">Giảm thời gian báo cáo</div><div class="ms">7 ngày → 1 ngày</div></div>
+    <div class="metric"><div class="mv">&lt;10%</div><div class="ml">Sai lệch cash flow forecast</div><div class="ms">trước đây: 25–30%</div></div>
+    <div class="metric"><div class="mv">3×</div><div class="ml">Tốc độ ra quyết định</div><div class="ms">họp BGĐ 30 phút thay vì 90</div></div>
+  </div>
+</div>
+
+<!-- S5 CÁCH TIẾP CẬN -->
+<div class="slide" id="s5">
+  <div class="slbl" style="background:#fff3cd;color:#856404"><span class="sdot" style="background:#ffc107"></span>PHẦN 2 · CASE STUDY: HUDLAND</div>
+  <h1>2.4 Cách tiếp cận của Data Services</h1>
+  <p class="sub">4 cấp độ số hóa · Giải pháp cụ thể cho Hudland</p>
+  <div class="tl-out">
+    <div class="tl-sp" id="tl-spine"></div>
+    <div style="flex:1"><div class="tl-rows" id="tl-rows"></div><div id="tl-detail" class="tl-det"></div></div>
+  </div>
+</div>
+
+<!-- S6 BÁO CÁO HUDLAND -->
+<div class="slide" id="s6">
+  <div class="slbl" style="background:#fff3cd;color:#856404"><span class="sdot" style="background:#ffc107"></span>PHẦN 2 · CASE STUDY: HUDLAND</div>
+  <h1>Báo cáo quản trị đề xuất cho Hudland</h1>
+  <p class="sub">Hệ thống dashboard theo 4 chiều — CEO nhìn tổng, từng khối nhìn chi tiết</p>
+  <div class="sol-grid">
+    <div class="sol-card"><div class="sol-head" style="background:var(--blue-l)"><div class="sol-head-t" style="color:var(--blue)">Tài chính & Cash flow</div></div><div class="sol-body">
+      <div class="sol-item"><span class="sol-dot" style="background:var(--blue)"></span>Cash flow thực tế vs kế hoạch theo tuần</div>
+      <div class="sol-item"><span class="sol-dot" style="background:var(--blue)"></span>Doanh thu ghi nhận theo từng dự án & pháp nhân</div>
+      <div class="sol-item"><span class="sol-dot" style="background:var(--blue)"></span>Chi phí phát sinh ngoài kế hoạch — alert tự động</div>
+      <div class="sol-item"><span class="sol-dot" style="background:var(--blue)"></span>Báo cáo tài chính tổng hợp toàn tập đoàn</div>
+    </div></div>
+    <div class="sol-card"><div class="sol-head" style="background:var(--teal-l)"><div class="sol-head-t" style="color:#00906b">Sales & Giỏ hàng</div></div><div class="sol-body">
+      <div class="sol-item"><span class="sol-dot" style="background:var(--teal)"></span>Giỏ hàng real-time 5 dự án, phân loại trạng thái</div>
+      <div class="sol-item"><span class="sol-dot" style="background:var(--teal)"></span>Tỷ lệ chuyển đổi theo kênh bán, theo sale</div>
+      <div class="sol-item"><span class="sol-dot" style="background:var(--teal)"></span>Sales scorecard tự động — top performer & coaching list</div>
+      <div class="sol-item"><span class="sol-dot" style="background:var(--teal)"></span>Dự báo doanh thu 3–6 tháng tới</div>
+    </div></div>
+    <div class="sol-card"><div class="sol-head" style="background:var(--amber-l)"><div class="sol-head-t" style="color:#b45309">Tiến độ & Thi công</div></div><div class="sol-body">
+      <div class="sol-item"><span class="sol-dot" style="background:var(--amber)"></span>Tiến độ xây dựng vs milestone, cảnh báo chậm</div>
+      <div class="sol-item"><span class="sol-dot" style="background:var(--amber)"></span>Chi phí thi công thực tế vs dự toán theo gói thầu</div>
+      <div class="sol-item"><span class="sol-dot" style="background:var(--amber)"></span>Tỷ lệ bàn giao đúng hạn theo từng dự án</div>
+      <div class="sol-item"><span class="sol-dot" style="background:var(--amber)"></span>Quản lý công nợ nhà thầu phụ</div>
+    </div></div>
+    <div class="sol-card"><div class="sol-head" style="background:var(--purple-l)"><div class="sol-head-t" style="color:var(--purple)">Khách hàng & Pháp lý</div></div><div class="sol-body">
+      <div class="sol-item"><span class="sol-dot" style="background:var(--purple)"></span>Tiến độ ký kết & công chứng theo từng dự án</div>
+      <div class="sol-item"><span class="sol-dot" style="background:var(--purple)"></span>Khiếu nại real-time — SLA xử lý & escalation</div>
+      <div class="sol-item"><span class="sol-dot" style="background:var(--purple)"></span>NPS & satisfaction score theo dự án</div>
+      <div class="sol-item"><span class="sol-dot" style="background:var(--purple)"></span>Churn risk — khách hàng có nguy cơ hủy cọc</div>
+    </div></div>
+  </div>
+</div>
+
+<!-- S7 TOOLKIT -->
+<div class="slide" id="s7">
+  <div class="slbl" style="background:#f0fdf4;color:#16a34a"><span class="sdot" style="background:#22c55e"></span>PHẦN 3 · KẾT LUẬN</div>
+  <h1>Sales toolkit: Nhận biết khách tiềm năng</h1>
+  <p class="sub">Đừng chờ khách hỏi — hãy nhận ra họ trước</p>
+  <div class="tk-grid">
+    <div>
+      <div class="tk-lbl">TÍN HIỆU NHẬN BIẾT</div>
+      <div style="margin-bottom:12px">
+        <div class="sig-gt"><span class="sdot2" style="background:var(--red)"></span>Tín hiệu nóng</div>
+        <div class="sig-item" style="border-left-color:var(--red)">Đang có từ 2 dự án trở lên chạy song song</div>
+        <div class="sig-item" style="border-left-color:var(--red)">Vừa gặp sự cố báo cáo sai hoặc họp BGĐ mất thời gian</div>
+        <div class="sig-item" style="border-left-color:var(--red)">Sắp mở bán dự án mới, cần kiểm soát sales tốt hơn</div>
+        <div class="sig-item" style="border-left-color:var(--red)">CEO/CFO mới lên, yêu cầu chuẩn hóa báo cáo</div>
+      </div>
+      <div>
+        <div class="sig-gt"><span class="sdot2" style="background:var(--amber)"></span>Tín hiệu ấm</div>
+        <div class="sig-item" style="border-left-color:var(--amber)">Đang dùng nhiều Excel, Google Sheet rời rạc</div>
+        <div class="sig-item" style="border-left-color:var(--amber)">Vừa triển khai ERP nhưng chưa có báo cáo quản trị</div>
+        <div class="sig-item" style="border-left-color:var(--amber)">Đang scale lên — từ 1 lên 3+ dự án</div>
+        <div class="sig-item" style="border-left-color:var(--amber)">Team kế toán thường phàn nàn số liệu không khớp</div>
+      </div>
+    </div>
+    <div>
+      <div class="tk-lbl">CÂU HỎI DISCOVERY</div>
+      <div class="disc-item"><div class="disc-cat">KHÁM PHÁ NỖI ĐAU</div><div class="disc-q">Hiện tại anh/chị nhận báo cáo từ các dự án theo quy trình như thế nào?</div></div>
+      <div class="disc-item"><div class="disc-cat">KHÁM PHÁ NỖI ĐAU</div><div class="disc-q">Mỗi tháng team mất bao lâu để tổng hợp số liệu cho họp BGĐ?</div></div>
+      <div class="disc-item"><div class="disc-cat">XÁC ĐỊNH IMPACT</div><div class="disc-q">Có lần nào quyết định bị ảnh hưởng vì data sai hoặc đến muộn không?</div></div>
+      <div class="disc-item"><div class="disc-cat">XÁC ĐỊNH IMPACT</div><div class="disc-q">Nếu CEO có dashboard real-time mỗi sáng, điều đó thay đổi được gì?</div></div>
+      <div class="disc-item"><div class="disc-cat">TÌM SPONSOR</div><div class="disc-q">Ai trong BGĐ là người quan tâm nhất đến cải thiện báo cáo quản trị?</div></div>
+      <div class="disc-item"><div class="disc-cat">TÌM SPONSOR</div><div class="disc-q">CFO hay COO có đang gặp khó khăn gì với số liệu vận hành không?</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- S8 TAKEAWAY -->
+<div class="slide" id="s8">
+  <div class="slbl" style="background:#f0fdf4;color:#16a34a"><span class="sdot" style="background:#22c55e"></span>PHẦN 3 · KẾT LUẬN</div>
+  <h1>3 điều cần nhớ khi pitch Data Services</h1>
+  <p class="sub">Takeaways cho team Sales</p>
+  <div class="tw-item" style="border-color:var(--blue-m)"><div style="position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--blue)"></div><div class="tw-num" style="color:var(--blue)">01</div><div><div class="tw-t">Bán bài toán, không bán sản phẩm</div><div class="tw-d">Khách không mua "dashboard". Họ mua "báo cáo đúng, nhanh, không tốn người làm tay". Luôn dẫn bằng nỗi đau — rồi mới nói giải pháp.</div></div></div>
+  <div class="tw-item" style="border-color:var(--teal-m)"><div style="position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--teal)"></div><div class="tw-num" style="color:#00906b">02</div><div><div class="tw-t">Xác định đúng cấp độ trưởng thành data của khách</div><div class="tw-d">Hỏi trước khách đang ở L1, L2 hay L3. Đừng pitch L4 cho khách còn đang dùng Excel rời rạc — họ chưa sẵn sàng và sẽ không tin.</div></div></div>
+  <div class="tw-item" style="border-color:var(--purple-m)"><div style="position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--purple)"></div><div class="tw-num" style="color:var(--purple)">03</div><div><div class="tw-t">Tìm đúng người — CEO/CFO, không phải IT</div><div class="tw-d">CEO/CFO là người cảm thấy nỗi đau. IT là người triển khai. Nếu chỉ nói chuyện với IT, deal sẽ chết ở phê duyệt ngân sách.</div></div></div>
+</div>
+
+</div><!-- wrap -->
+
+<script>
+var TOTAL=9,curSlide=0,curLevel=0,curTab="examples";
+
+var CV=[
+  {pain:"Không có hệ thống lưu trữ quỹ đất, cơ hội. Phụ thuộc cá nhân, thất thoát khi nhân sự nghỉ.",data:"Pipeline dự án, cơ sở dữ liệu quỹ đất, lịch sử đàm phán — tập trung, phân quyền truy cập."},
+  {pain:"Chi phí GPMB, xin phép, thiết kế phân tán. Không theo dõi tổng chi phí đầu vào real-time.",data:"Quản lý ngân sách đầu tư theo phase, cash flow forecast giai đoạn 1."},
+  {pain:"Quy trình đấu thầu nhiều lớp giấy tờ. Không tracking trạng thái hồ sơ, hay bỏ lỡ deadline.",data:"Số hóa quy trình đấu thầu, tracking hồ sơ, alert deadline, lịch sử nhà thầu."},
+  {pain:"BGĐ không biết tiến độ thực tế. Báo cáo thi công làm thủ công. Không đối soát khối lượng vs thanh toán.",data:"Dashboard tiến độ real-time, Gantt chart tự động, alert chậm milestone."},
+  {pain:"Hồ sơ nghiệm thu rải rác, dễ mất. Ký duyệt thanh toán nhà thầu chậm, nhiều bước thủ công.",data:"Số hóa quy trình nghiệm thu và thanh toán, ký số, quản lý hồ sơ hoàn công."},
+  {pain:"Giỏ hàng không real-time khi có 5+ dự án. KPI sale không rõ, không biết kênh nào hiệu quả.",data:"Dashboard giỏ hàng real-time, CRM pipeline, phân tích kênh bán, sales scorecard tự động."},
+  {pain:"Khiếu nại xử lý chậm, không có SLA. Tiến độ bàn giao không thông báo chủ động cho khách.",data:"Ticket CSKH với SLA tự động, quy trình xử lý khiếu nại, thông báo proactive bàn giao."}
+];
+
+var LV=[
+  {c:"#00906b",bg:"#e0faf3",border:"#7fe8cc",dot:"#00c896",label:"L1 · Số hóa cơ bản",title:"Số hóa cơ bản",desc:"Lưu trữ số thay giấy tờ",symptom:"Hudland trước đây: 8+ file Excel rời rạc, mỗi phòng 1 sheet riêng",pills:["Excel","Drive","Email","Scan"],examples:["Quản lý giỏ hàng bằng Excel / Google Sheet","Hợp đồng scan lưu Drive","Email thay thế fax & giấy tờ","Bảng theo dõi tiến độ thi công trên Sheet"],signals:["Mỗi phòng có 1 file Excel riêng","Hỏi số liệu phải chờ người tổng hợp","Họp BGĐ mất 60+ phút chỉ để đọc số","Không biết toàn bộ giỏ hàng đang ở đâu"],tools:["Google Sheets / Excel","Google Drive","Gmail / Outlook","Zalo nội bộ"],upgrade:"Bước tiếp: chọn 1 hệ thống trung tâm (CRM/ERP) và nhập dữ liệu tập trung. Với Hudland: kết nối Misa + Base CRM vào Data Warehouse."},
+  {c:"#1a6bff",bg:"#e8f0ff",border:"#b8d0ff",dot:"#1a6bff",label:"L2 · Tích hợp hệ thống",title:"Tích hợp hệ thống",desc:"Nhập 1 nơi, đồng bộ khắp nơi",symptom:"Hudland hiện tại: đang triển khai — ERP + CRM đã có, đang kết nối",pills:["CRM","ERP","Ký số","API"],examples:["CRM Base quản lý lead & giao dịch","ERP Misa kết nối kế toán","Phần mềm quản lý tiến độ thi công","Hợp đồng ký số tích hợp lưu trữ"],signals:["Đang dùng CRM/ERP nhưng chưa kết nối nhau","Vẫn export ra Excel để tổng hợp","Dữ liệu Sales và Kế toán không khớp","IT phải đồng bộ thủ công"],tools:["CRM: Base.vn","ERP: Misa","Ký số: VNPT eSign","Pipeline: Airbyte"],upgrade:"Với Hudland: Data Services đang xây pipeline từ Misa + Base CRM → BigQuery. Dự kiến hoàn thành trong 6 tuần đầu."},
+  {c:"#b45309",bg:"#fffbeb",border:"#fcd34d",dot:"#f59e0b",label:"L3 · Báo cáo thời gian thực",title:"Báo cáo thời gian thực",desc:"Dashboard & KPI tự động cập nhật",symptom:"Mục tiêu Hudland: CEO có dashboard mỗi sáng, không cần họp để đọc số",pills:["Dashboard","BI","Alert","KPI"],examples:["Dashboard doanh thu real-time theo 5 dự án","Báo cáo giỏ hàng tự cập nhật","Alert khi tiến độ chậm vs milestone","Báo cáo tuần tự generate mỗi sáng thứ Hai"],signals:["CEO có dashboard nhưng chưa tin số liệu","Báo cáo đẹp nhưng vẫn họp giải thích","Chưa có cảnh báo sớm khi KPI lệch","Analyst kéo data thủ công để phân tích"],tools:["BI: Metabase + Power BI","DW: BigQuery","dbt","Alert: Slack integration"],upgrade:"Với Hudland: mục tiêu cuối phase 1 (tháng 3). Sau khi đạt L3, BGĐ có đủ data sạch để tiến lên L4."},
+  {c:"#7c5cfc",bg:"#f0ecff",border:"#c4b4fc",dot:"#7c5cfc",label:"L4 · Ra quyết định bằng data",title:"Ra quyết định bằng data",desc:"Dự báo & phân tích hỗ trợ chiến lược",symptom:"Lộ trình Hudland: phase 2 sau khi L3 ổn định",pills:["Forecast","Pricing","Churn","Segment"],examples:["Dự báo cash flow 6 tháng, độ chính xác >85%","Định giá bán tối ưu theo phân khu, thời điểm","Churn risk — khách nào có nguy cơ hủy cọc cao","Segment KH để cá nhân hóa chính sách và chăm sóc"],signals:["BGĐ hỏi data nói gì trước khi quyết định","Có team Analytics chuyên trách","Dùng A/B test kiểm tra chính sách bán","Dự báo dòng tiền trong biên độ <15%"],tools:["ML: Python, Prophet","Platform: Databricks, dbt Cloud","Experiment: A/B testing","Governance: data catalog nội bộ"],upgrade:"Với Hudland: phase 2 — dự kiến sau 3 tháng khi L3 đã vận hành ổn định và team đã tin vào data."}
+];
+
+function renderDots(){
+  var d=document.getElementById("dots"); d.innerHTML="";
+  for(var i=0;i<TOTAL;i++){
+    var b=document.createElement("button"); b.className="ndot"+(i===curSlide?" active":i<curSlide?" done":"");
+    (function(x){b.addEventListener("click",function(){goTo(x);});})(i);
+    d.appendChild(b);
+  }
+  document.getElementById("counter").textContent=(curSlide+1)+"/"+TOTAL;
+}
+
+function goTo(n){
+  var p=document.getElementById("s"+curSlide); if(p) p.classList.remove("active");
+  curSlide=Math.max(0,Math.min(TOTAL-1,n));
+  var nx=document.getElementById("s"+curSlide); if(nx) nx.classList.add("active");
+  renderDots();
+  if(curSlide===5) renderTimeline();
+  if(curSlide===2) initCVNodes();
+}
+function go(d){goTo(curSlide+d);}
+
+function initCVNodes(){
+  document.querySelectorAll("#cv-nodes .cvn").forEach(function(el){
+    el.addEventListener("click",function(){
+      var n=parseInt(el.getAttribute("data-cv"));
+      document.querySelectorAll("#cv-nodes .cvn").forEach(function(nd){nd.style.background="var(--bg3)";nd.style.borderColor="var(--border)";});
+      el.style.background="var(--blue-l)"; el.style.borderColor="var(--blue)";
+      var det=document.getElementById("cv-detail"); if(!det) return;
+      var cv=CV[n-1];
+      det.innerHTML='<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">'
+        +'<div><div style="font-size:10px;font-weight:700;color:var(--red);letter-spacing:.06em;margin-bottom:4px">BÀI TOÁN PAIN</div><div style="font-size:11px;color:var(--text2);line-height:1.55">'+cv.pain+'</div></div>'
+        +'<div><div style="font-size:10px;font-weight:700;color:#00906b;letter-spacing:.06em;margin-bottom:4px">GIẢI PHÁP DATA</div><div style="font-size:11px;color:var(--text2);line-height:1.55">'+cv.data+'</div></div></div>';
+    });
+  });
+}
+
+function renderTimeline(){
+  var sp=document.getElementById("tl-spine"),rw=document.getElementById("tl-rows");
+  if(!sp||!rw) return;
+  sp.innerHTML=""; rw.innerHTML="";
+  for(var i=0;i<LV.length;i++){
+    var l=LV[i],isA=i===curLevel;
+    var nd=document.createElement("div"); nd.className="tl-nd";
+    nd.style.borderColor=l.dot; nd.style.color=isA?"#fff":l.dot; nd.style.background=isA?l.dot:"#fff";
+    nd.textContent="L"+(i+1);
+    (function(x){nd.addEventListener("click",function(){selLevel(x);});})(i);
+    sp.appendChild(nd);
+    if(i<LV.length-1){var ln=document.createElement("div");ln.className="tl-vl";ln.style.background=l.border;sp.appendChild(ln);}
+    var row=document.createElement("div"); row.className="tl-row"+(isA?" active":"");
+    if(isA){row.style.borderColor=l.dot;row.style.background=l.bg;row.style.boxShadow="0 2px 10px rgba(0,0,0,.06)";}
+    (function(x){row.addEventListener("click",function(){selLevel(x);});})(i);
+    row.innerHTML='<span class="tl-badge" style="background:'+l.bg+';color:'+l.c+';border:1px solid '+l.border+'">'+l.label+'</span>'
+      +'<div class="tl-t">'+l.title+'</div><div class="tl-d">'+l.desc+'</div>'
+      +'<div class="tl-sym">'+l.symptom+'</div>'
+      +'<div class="tl-pills">'+l.pills.map(function(p){return'<span class="tl-pill" style="background:'+l.bg+';color:'+l.c+';border-color:'+l.border+'">'+p+'</span>';}).join("")+'</div>';
+    rw.appendChild(row);
+    if(i<LV.length-1){var s2=document.createElement("div");s2.style.height="5px";rw.appendChild(s2);}
+  }
+  renderDetail();
+}
+
+function renderDetail(){
+  var det=document.getElementById("tl-detail"); if(!det) return;
+  var l=LV[curLevel];
+  var tabs=[["examples","Ví dụ BĐS"],["signals","Dấu hiệu"],["tools","Tech stack"],["upgrade","Hudland roadmap"]];
+  det.style.borderColor=l.border;
+  det.innerHTML='<div class="tl-dh" style="background:'+l.bg+';border-color:'+l.border+'">'
+    +'<div style="font-size:13px;font-weight:600;color:'+l.c+'">'+l.label+'</div>'
+    +'<div style="font-size:11px;color:var(--text3);margin-top:2px">'+l.symptom+'</div></div>'
+    +'<div class="tl-dtabs">'+tabs.map(function(t){var on=curTab===t[0];return'<button class="tl-dtab'+(on?" on":"")+'" style="'+(on?"color:"+l.c+";border-bottom-color:"+l.c:"")+'">'+t[1]+'</button>';}).join("")+'</div>'
+    +'<div class="tl-db" id="tl-dbody"></div>';
+  det.querySelectorAll(".tl-dtab").forEach(function(btn,idx){
+    btn.addEventListener("click",function(){curTab=tabs[idx][0];renderDetail();});
+  });
+  renderBody();
+}
+
+function renderBody(){
+  var b=document.getElementById("tl-dbody"); if(!b) return;
+  var l=LV[curLevel],html="";
+  if(curTab==="examples"){
+    html=l.examples.map(function(e){return'<div style="display:flex;gap:8px;margin-bottom:7px"><span style="width:5px;height:5px;border-radius:50%;background:'+l.dot+';flex-shrink:0;margin-top:5px"></span><span style="font-size:12px;color:var(--text2);line-height:1.5">'+e+'</span></div>';}).join("");
+  }else if(curTab==="signals"){
+    html='<div style="font-size:11px;color:var(--text3);margin-bottom:7px">Khách đang ở level này thường có:</div>';
+    html+=l.signals.map(function(s,i){return'<div style="display:flex;gap:8px;padding:7px 10px;border-radius:7px;margin-bottom:5px;background:'+l.bg+';border:1px solid '+l.border+'"><span style="font-size:11px;font-weight:700;color:'+l.c+';min-width:16px">'+(i+1)+'.</span><span style="font-size:12px;color:var(--text2);line-height:1.45">'+s+'</span></div>';}).join("");
+  }else if(curTab==="tools"){
+    html='<div style="font-size:11px;color:var(--text3);margin-bottom:8px">Tech stack phổ biến:</div><div style="display:flex;flex-wrap:wrap;gap:6px">';
+    html+=l.tools.map(function(t){return'<span style="font-size:11px;padding:4px 10px;border-radius:20px;border:1px solid '+l.border+';color:'+l.c+';background:'+l.bg+'">'+t+'</span>';}).join("");
+    html+='</div>';
+  }else{
+    html='<div style="padding:12px;border-radius:8px;background:'+l.bg+';border:1px solid '+l.border+'">'
+      +'<div style="font-size:10px;font-weight:700;color:'+l.c+';letter-spacing:.05em;margin-bottom:6px">HUDLAND ROADMAP</div>'
+      +'<div style="font-size:12px;color:var(--text2);line-height:1.65">'+l.upgrade+'</div></div>';
+  }
+  b.innerHTML=html;
+}
+
+function selLevel(i){curLevel=i;curTab="examples";renderTimeline();}
+
+document.addEventListener("DOMContentLoaded",function(){
+  document.getElementById("btn-prev").addEventListener("click",function(){go(-1);});
+  document.getElementById("btn-next").addEventListener("click",function(){go(1);});
+  document.getElementById("btn-print").addEventListener("click",function(){window.print();});
+  renderDots();
+  initCVNodes();
+});
+</script>
+</body>
+</html>
